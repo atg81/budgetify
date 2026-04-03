@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_medium"
+        android:background="@color/surface_dark_elevated"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Raporlar"
+            style="@style/TextAppearance.MyApp.Headline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium">
+
+            <!-- Period Toggle -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggle_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:checkedButton="@id/btn_monthly"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <Button
+                    android:id="@+id/btn_monthly"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aylık"
+                    android:textColor="@color/primary_green"
+                    app:strokeColor="@color/primary_green" />
+
+                <Button
+                    android:id="@+id/btn_yearly"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yıllık"
+                    android:textColor="@color/primary_green"
+                    app:strokeColor="@color/primary_green" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- Empty State -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/toggle_period">
+
+                <ImageView
+                    android:id="@+id/iv_empty"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/ic_reports"
+                    android:tint="@color/text_tertiary"
+                    android:alpha="0.5"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_empty_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rapor verisi yok"
+                    style="@style/TextAppearance.MyApp.Headline2"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    app:layout_constraintTop_toBottomOf="@id/iv_empty"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_empty_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Raporları görmek için önce harcama ekleyin"
+                    style="@style/TextAppearance.MyApp.Body2"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                    app:layout_constraintTop_toBottomOf="@id/tv_empty_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Reports Content (Hidden when no data) -->
+            <LinearLayout
+                android:id="@+id/content_reports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/spacing_large"
+                app:layout_constraintTop_toBottomOf="@id/toggle_period">
+
+                <!-- Spending Distribution Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_distribution"
+                    style="@style/Widget.MyApp.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_large">
+
+                        <TextView
+                            android:id="@+id/tv_distribution_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Harcama Dağılımı"
+                            style="@style/TextAppearance.MyApp.Headline2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_distribution_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kategori bazlı"
+                            style="@style/TextAppearance.MyApp.Caption"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_distribution_title" />
+
+                        <!-- Chart placeholder -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:text="[Grafik Alanı]"
+                            android:gravity="center"
+                            style="@style/TextAppearance.MyApp.Body2"
+                            android:background="@color/divider_color"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            app:layout_constraintTop_toBottomOf="@id/tv_distribution_subtitle" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Spending Trend Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_trend"
+                    style="@style/Widget.MyApp.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_large">
+
+                        <TextView
+                            android:id="@+id/tv_trend_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Harcama Eğilimi"
+                            style="@style/TextAppearance.MyApp.Headline2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_trend_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Zaman bazlı"
+                            style="@style/TextAppearance.MyApp.Caption"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_trend_title" />
+
+                        <!-- Chart placeholder -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:text="[Grafik Alanı]"
+                            android:gravity="center"
+                            style="@style/TextAppearance.MyApp.Body2"
+                            android:background="@color/divider_color"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            app:layout_constraintTop_toBottomOf="@id/tv_trend_subtitle" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

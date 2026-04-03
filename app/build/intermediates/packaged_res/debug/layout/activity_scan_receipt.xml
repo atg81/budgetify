@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_medium"
+        android:background="@color/surface_dark_elevated"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/text_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fiş Tara"
+            style="@style/TextAppearance.MyApp.Headline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium">
+
+            <!-- Receipt Photo Preview -->
+            <ImageView
+                android:id="@+id/iv_receipt"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerInside"
+                android:background="@color/surface_dark_elevated"
+                android:src="@android:drawable/ic_menu_camera"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_take_photo"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:text="Fotoğraf Çek"
+                android:textColor="@color/primary_green"
+                app:strokeColor="@color/primary_green"
+                app:layout_constraintTop_toBottomOf="@id/iv_receipt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/btn_take_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_loading_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Analiz ediliyor..."
+                android:visibility="gone"
+                style="@style/TextAppearance.MyApp.Body2"
+                app:layout_constraintTop_toBottomOf="@id/progress_bar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Analysis Result Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_result"
+                style="@style/Widget.MyApp.Card.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tv_loading_status">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Analiz Sonucu"
+                        style="@style/TextAppearance.MyApp.Headline2"
+                        android:textColor="@color/primary_green"
+                        android:layout_marginBottom="@dimen/spacing_medium" />
+
+                    <TextView
+                        android:id="@+id/tv_res_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tutar: "
+                        style="@style/TextAppearance.MyApp.Body1" />
+
+                    <TextView
+                        android:id="@+id/tv_res_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tarih: "
+                        android:layout_marginTop="@dimen/spacing_small"
+                        style="@style/TextAppearance.MyApp.Body1" />
+
+                    <TextView
+                        android:id="@+id/tv_res_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Kategori: "
+                        android:layout_marginTop="@dimen/spacing_small"
+                        style="@style/TextAppearance.MyApp.Body1" />
+                        
+                    <TextView
+                        android:id="@+id/tv_res_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Açıklama: "
+                        android:layout_marginTop="@dimen/spacing_small"
+                        style="@style/TextAppearance.MyApp.Body1" />
+
+                    <Button
+                        android:id="@+id/btn_save"
+                        style="@style/Widget.MyApp.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:text="Onayla ve Kaydet" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

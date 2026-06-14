@@ -1,5 +1,6 @@
 package com.example.myapp.data.ai
 
+import com.example.myapp.BuildConfig
 import com.example.myapp.data.model.ReceiptAnalysis
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -8,6 +9,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -15,10 +17,13 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class GeminiService {
-    
-    // Key local.properties'den okunur (GitHub'a gitmez)
+
+    // Groq API Key - local.properties'den okunur (GitHub'a gitmez)
     private val apiKey = BuildConfig.GEMINI_API_KEY
-    private val modelName = "gemini-2.0-flash"
+
+    // Groq ücretsiz, hızlı ve güvenilir
+    private val groqUrl = "https://api.groq.com/openai/v1/chat/completions"
+    private val modelName = "llama-3.1-8b-instant"
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)
@@ -28,7 +33,7 @@ class GeminiService {
 
     suspend fun analyzeReceipt(ocrText: String): ReceiptAnalysis? = withContext(Dispatchers.IO) {
         val todayStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        
+
         val prompt = """
             Sen otomatik bir sistemin parçası olan uzman bir makbuz analisti yapay zekasın. 
             Aşağıdaki OCR metnindeki bilgileri çıkarıp SADECE ve SADECE geçerli bir JSON nesnesi döndür.
@@ -46,60 +51,46 @@ class GeminiService {
             $ocrText
         """.trimIndent()
 
-        // Google Gemini API Request Body Builder
+        // Groq - OpenAI uyumlu format
         val jsonPayload = JSONObject().apply {
-            put("contents", org.json.JSONArray().apply {
+            put("model", modelName)
+            put("messages", JSONArray().apply {
                 put(JSONObject().apply {
-                    put("parts", org.json.JSONArray().apply {
-                        put(JSONObject().apply {
-                            put("text", prompt)
-                        })
-                    })
+                    put("role", "user")
+                    put("content", prompt)
                 })
             })
+            put("max_tokens", 300)
+            put("temperature", 0.1)
         }
 
         val requestBody = jsonPayload.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
 
-        // AIzaSy → API Key (URL parametresi), AQ. → OAuth Token (Bearer header)
-        val isOAuthToken = apiKey.startsWith("AQ.")
-        val url = if (isOAuthToken)
-            "https://generativelanguage.googleapis.com/v1beta/models/$modelName:generateContent"
-        else
-            "https://generativelanguage.googleapis.com/v1beta/models/$modelName:generateContent?key=$apiKey"
-
-        val requestBuilder = Request.Builder()
-            .url(url)
-            .header("User-Agent", "Mozilla/5.0 (Linux; Android 10; Mobile)")
+        val request = Request.Builder()
+            .url(groqUrl)
+            .header("Authorization", "Bearer $apiKey")
+            .header("Content-Type", "application/json")
             .post(requestBody)
-
-        if (isOAuthToken) {
-            requestBuilder.header("Authorization", "Bearer $apiKey")
-        }
-
-        val request = requestBuilder.build()
+            .build()
 
         try {
             val response = client.newCall(request).execute()
             val responseString = response.body?.string() ?: ""
 
             if (!response.isSuccessful) {
-                // Hatanın tam içeriğini alıyoruz ki ne olduğunu öğrenelim (kota mı, api key mi, konum mu)
                 throw Exception("API Hatası (Kod: ${response.code}): $responseString")
             }
 
-            // Başarılı cevabı parse etme
+            // Groq - OpenAI uyumlu cevap formatı
             val responseJson = JSONObject(responseString)
-            val candidates = responseJson.optJSONArray("candidates")
-            if (candidates == null || candidates.length() == 0) {
+            val choices = responseJson.optJSONArray("choices")
+            if (choices == null || choices.length() == 0) {
                 throw Exception("Yapay zeka cevap döndürmedi: $responseString")
             }
 
-            val textResult = candidates.getJSONObject(0)
-                .getJSONObject("content")
-                .getJSONArray("parts")
-                .getJSONObject(0)
-                .getString("text")
+            val textResult = choices.getJSONObject(0)
+                .getJSONObject("message")
+                .getString("content")
 
             val jsonRegex = Regex("""\{[\s\S]*\}""")
             val matchResult = jsonRegex.find(textResult)
@@ -112,7 +103,7 @@ class GeminiService {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            throw Exception(e.message) // Hata mesajını UI'a yansıt
+            throw Exception(e.message)
         }
     }
 }

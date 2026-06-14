@@ -8,6 +8,9 @@ local.properties
 /captures
 .externalNativeBuild
 .cxx
+*.apk
+app/build/
+app/release/
 
 # Logs
 logs

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_medium"
+        android:background="@color/surface_dark_elevated"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Geçmiş"
+            style="@style/TextAppearance.MyApp.Headline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Search Bar -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_search"
+        style="@style/Widget.MyApp.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_medium"
+        android:hint="Ara..."
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:startIconTint="@color/text_secondary"
+        app:layout_constraintTop_toBottomOf="@id/top_bar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/text_primary"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Filter Chips -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:layout_constraintTop_toBottomOf="@id/til_search">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_all"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tümü"
+            android:checked="true"
+            app:chipBackgroundColor="@color/primary_green"
+            app:chipStrokeColor="@color/primary_green" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_income"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gelir"
+            app:chipBackgroundColor="@color/primary_green"
+            app:chipStrokeColor="@color/primary_green" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_expense"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gider"
+            app:chipBackgroundColor="@color/primary_green"
+            app:chipStrokeColor="@color/primary_green" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <!-- RecyclerView for Transactions -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_transactions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/spacing_medium"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/chip_group_filter"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Empty State -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/chip_group_filter"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_empty"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_history"
+            android:tint="@color/text_tertiary"
+            android:alpha="0.5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.4" />
+
+        <TextView
+            android:id="@+id/tv_empty_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Henüz işlem yok"
+            style="@style/TextAppearance.MyApp.Headline2"
+            android:layout_marginTop="@dimen/spacing_large"
+            app:layout_constraintTop_toBottomOf="@id/iv_empty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_empty_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="İlk harcamanızı ekleyerek başlayın"
+            style="@style/TextAppearance.MyApp.Body2"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginHorizontal="@dimen/spacing_xlarge"
+            app:layout_constraintTop_toBottomOf="@id/tv_empty_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

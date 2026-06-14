@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/fragment_login.xml",
+        "source": "com.example.myapp-main-46:/layout/fragment_login.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/fragment_register.xml",
+        "source": "com.example.myapp-main-46:/layout/fragment_register.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/fragment_reports.xml",
+        "source": "com.example.myapp-main-46:/layout/fragment_reports.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/item_report_trend.xml",
+        "source": "com.example.myapp-main-46:/layout/item_report_trend.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/item_report_category.xml",
+        "source": "com.example.myapp-main-46:/layout/item_report_category.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/activity_scan_receipt.xml",
+        "source": "com.example.myapp-main-46:/layout/activity_scan_receipt.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/activity_settings.xml",
+        "source": "com.example.myapp-main-46:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/fragment_add_expense.xml",
+        "source": "com.example.myapp-main-46:/layout/fragment_add_expense.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/fragment_dashboard.xml",
+        "source": "com.example.myapp-main-46:/layout/fragment_dashboard.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/activity_main.xml",
+        "source": "com.example.myapp-main-46:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/fragment_history.xml",
+        "source": "com.example.myapp-main-46:/layout/fragment_history.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/item_transaction.xml",
+        "source": "com.example.myapp-main-46:/layout/item_transaction.xml"
+    },
+    {
+        "merged": "com.example.myapp-mergeReleaseResources-44:/layout/activity_auth.xml",
+        "source": "com.example.myapp-main-46:/layout/activity_auth.xml"
+    }
+]

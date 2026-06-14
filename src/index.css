@@ -1,0 +1,20 @@
+/* Global utilities & small layout tweaks */
+.container{max-width:1200px;margin:0 auto}
+
+.summary-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.summary-cards .card{text-align:left}
+.summary-cards .amount{font-size:22px;font-weight:700;margin-top:6px}
+
+.transaction-list{list-style:none;padding:0;margin:0}
+.transaction-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.02)}
+.transaction-item:last-child{border-bottom:none}
+
+.chart-area{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pie-chart-container,.line-chart-container{min-height:300px}
+
+.small-muted{color:var(--muted);font-size:13px}
+
+@media (max-width:900px){
+  .summary-cards{grid-template-columns:1fr}
+  .chart-area{grid-template-columns:1fr}
+}

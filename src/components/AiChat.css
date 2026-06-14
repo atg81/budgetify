@@ -1,0 +1,65 @@
+/* Modernized styles for AiChat component and floating wallet button */
+:root{--ai-width:380px}
+
+.wallet-button{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  width:56px;
+  height:56px;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--accent),#00b06a);
+  color:#041016;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 8px 30px rgba(2,6,23,0.25);
+  z-index:60;
+}
+
+.ai-chat-panel{
+  position:fixed;
+  right:20px;
+  bottom:100px;
+  width:var(--ai-width);
+  max-height:78vh;
+  background: #ffffff; /* white background as requested */
+  border-radius:16px;
+  padding:12px;
+  box-shadow:0 22px 70px rgba(2,6,23,0.12);
+  border:1px solid rgba(3,10,27,0.06);
+  color:#082033; /* dark navy text */
+  z-index:70;
+  overflow:auto;
+  font-size:14px;
+  font-family: 'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+.ai-chat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ai-chat-header strong{font-size:15px;letter-spacing:0.2px;color:#04263d}
+.ai-header-accent{height:6px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#00775a);margin:8px 0 12px}
+
+.ai-section-title{font-size:13px;color:#234053;margin:6px 0 10px;font-weight:600}
+.ai-category,.ai-question{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#fcfffb);border:1px solid rgba(226,239,232,0.6);color:#082033;cursor:pointer;margin:8px 0;transition:transform .18s ease, box-shadow .18s ease}
+.ai-category .icon,.ai-question .icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#00b06a);display:inline-flex;align-items:center;justify-content:center;font-size:18px;color:#041016;font-weight:800}
+.ai-category:hover,.ai-question:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(3,12,30,0.12);border-left:4px solid #053049}
+.ai-q{font-weight:800;margin-bottom:6px;color:#022233}
+.ai-a{margin-bottom:12px;color:#16394b;line-height:1.45}
+.ai-answer{background:linear-gradient(180deg,#f8fffb,#f1fbff);padding:12px;border-radius:10px;border:1px solid rgba(3,16,30,0.03)}
+.ai-feedback{margin-top:10px;color:#234053}
+.ai-feedback-buttons{display:flex;gap:10px;margin-top:10px}
+.green-button{background:linear-gradient(90deg,var(--accent),#00b06a);color:#041016;padding:10px 14px;border-radius:12px;border:none;cursor:pointer;font-weight:800;box-shadow:0 12px 34px rgba(0,214,105,0.14)}
+.gray-button{background:linear-gradient(180deg,#eaf6fb,#f8fcff);border:1px solid rgba(3,16,30,0.06);padding:10px 14px;border-radius:12px;color:#04263d;cursor:pointer}
+.close-chat{background:#ffffff;border:1px solid rgba(3,16,30,0.06);padding:6px 10px;border-radius:10px;color:#04263d;font-size:16px;cursor:pointer}
+.back-to-cats{background:transparent;border:none;color:#234053;cursor:pointer;margin-bottom:8px}
+
+/* playful micro typography */
+.ai-chat-panel .ai-q{font-family: 'Poppins', Inter, system-ui; font-size:15px}
+.ai-chat-panel .ai-a{font-family: Inter, system-ui; font-size:14px}
+
+/* responsive */
+@media (max-width:900px){
+  .ai-chat-panel{right:12px;left:12px;width:auto;bottom:90px}
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f1724" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/budgetify_logo.png" />
+    <title>Budgetify</title>
+  </head>
+  <body>
+    <script>
+      // Early error overlay (runs before modules load)
+      (function(){
+        function showOverlay(title, message){
+          try{
+            var ex = document.getElementById('__inline_overlay__');
+            if(!ex){ ex = document.createElement('div'); ex.id='__inline_overlay__'; document.body.appendChild(ex); }
+            ex.innerHTML = '<div style="position:fixed;inset:0;background:#fff;color:#111;z-index:99999;padding:24px;font-family:Inter,system-ui,Arial;overflow:auto"><h2 style="color:#c53030">'+title+'</h2><pre style="white-space:pre-wrap;font-size:13px;line-height:1.4">'+(message||'')+'</pre><div style="margin-top:12px"><button id="__reload_btn_inline__" style="padding:8px 12px;background:#00e676;border-radius:8px;border:none;cursor:pointer">Sayfayı Yeniden Yükle</button></div></div>';
+            document.getElementById('__reload_btn_inline__')?.addEventListener('click',function(){window.location.reload()});
+          }catch(e){console.error('overlay error',e)}
+        }
+        window.addEventListener('error', function(ev){ var msg = ev.error?.stack || ev.message || String(ev); showOverlay('Unhandled error', msg); });
+        window.addEventListener('unhandledrejection', function(ev){ var msg = ev.reason?.stack || ev.reason || String(ev); showOverlay('Unhandled promise rejection', msg); });
+      })();
+    </script>
+
+    <div id="root"></div>
+    <!-- Vite giriş noktası -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

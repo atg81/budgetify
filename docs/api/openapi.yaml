@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Budgetify API (Supabase-backed)
+  version: 1.0.0
+paths:
+  /categories:
+    get:
+      summary: List categories for the authenticated user
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create a category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Created
+  /transactions:
+    get:
+      summary: List transactions (supports filters: start, end, category)
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '201':
+          description: Created
+  /reports/monthly:
+    get:
+      summary: Get monthly summary for the authenticated user
+      parameters:
+        - name: year
+          in: query
+        - name: month
+          in: query
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+        emoji:
+          type: string
+    Transaction:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+        type:
+          type: string
+          enum: [income, expense]
+        date:
+          type: string
+          format: date
+        category_id:
+          type: string
+        description:
+          type: string

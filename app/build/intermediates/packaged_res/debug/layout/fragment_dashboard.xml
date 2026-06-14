@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_medium"
+        android:background="@color/surface_dark_elevated"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ana Sayfa"
+            style="@style/TextAppearance.MyApp.Headline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_preferences"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/text_primary"
+            android:contentDescription="Ayarlar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium">
+
+            <!-- Budget Summary Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_budget"
+                style="@style/Widget.MyApp.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:id="@+id/tv_budget_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kalan Bütçe"
+                        style="@style/TextAppearance.MyApp.Body2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_budget_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="---"
+                        android:textSize="36sp"
+                        android:textColor="@color/primary_green"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_budget_label" />
+
+                    <TextView
+                        android:id="@+id/tv_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TL"
+                        style="@style/TextAppearance.MyApp.Body1"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_small"
+                        app:layout_constraintStart_toEndOf="@id/tv_budget_amount"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_budget_amount" />
+
+                    <!-- Progress Bar -->
+                    <TextView
+                        android:id="@+id/tv_progress_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Harcanan / Toplam"
+                        style="@style/TextAppearance.MyApp.Caption"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_budget_amount" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_budget"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:progress="0"
+                        android:max="100"
+                        android:progressTint="@color/primary_green"
+                        android:progressBackgroundTint="@color/divider_color"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        app:layout_constraintTop_toBottomOf="@id/tv_progress_label" />
+
+                    <TextView
+                        android:id="@+id/tv_progress_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--- / ---"
+                        style="@style/TextAppearance.MyApp.Caption"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/progress_budget" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Quick Add Button -->
+            <Button
+                android:id="@+id/btn_quick_add"
+                style="@style/Widget.MyApp.Button"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="+ Hızlı Harcama Ekle"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/spacing_medium"
+                app:layout_constraintTop_toBottomOf="@id/card_budget" />
+
+            <!-- Empty State -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/btn_quick_add">
+
+                <ImageView
+                    android:id="@+id/iv_empty"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@android:drawable/ic_menu_add"
+                    android:tint="@color/text_tertiary"
+                    android:alpha="0.5"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_empty_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Henüz harcama yok"
+                    style="@style/TextAppearance.MyApp.Headline2"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    app:layout_constraintTop_toBottomOf="@id/iv_empty"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_empty_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="İlk harcamanızı eklemek için yukarıdaki butona tıklayın"
+                    style="@style/TextAppearance.MyApp.Body2"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginHorizontal="@dimen/spacing_large"
+                    app:layout_constraintTop_toBottomOf="@id/tv_empty_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Recent Transactions Section (Hidden by default - will be shown when data exists) -->
+            <LinearLayout
+                android:id="@+id/section_recent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/spacing_large"
+                app:layout_constraintTop_toBottomOf="@id/btn_quick_add">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Son İşlemler"
+                    style="@style/TextAppearance.MyApp.Headline2"
+                    android:layout_marginBottom="@dimen/spacing_medium" />
+
+                <!-- Placeholder for recent transactions list -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recent_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!-- Scan Receipt FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_scan_receipt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:layout_marginBottom="24dp"
+        android:src="@android:drawable/ic_menu_camera"
+        app:backgroundTint="@color/primary_green"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="Fiş Tara" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

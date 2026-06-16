@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { getCategories, addTransaction } from '../lib/dataService';
-import FisTara from './FisTara';
 
 const GelirGiderFormu = ({ userId, onSuccess }) => {
   const [transaction, setTransaction] = useState({
@@ -17,8 +16,6 @@ const GelirGiderFormu = ({ userId, onSuccess }) => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [showFisTara, setShowFisTara] = useState(false);
-
   // Load categories on mount
   useEffect(() => {
     loadCategories();
@@ -40,31 +37,6 @@ const GelirGiderFormu = ({ userId, onSuccess }) => {
     setError('');
   };
 
-  // Fiş tarama sonucunu forma aktar
-  const handleFisResult = (data) => {
-    // Kategori adından ID bul (yaklaşık eşleştirme)
-    let matchedCatId = '';
-    if (data.categoryHint && categories.length > 0) {
-      const hint = data.categoryHint.toLowerCase();
-      const found = categories.find((c) => {
-        const name = c.name.toLowerCase();
-        return (
-          name.includes(hint.split(' ')[0]) ||
-          hint.includes(name.split(' ')[0])
-        );
-      });
-      if (found) matchedCatId = found.id;
-    }
-
-    setTransaction((prev) => ({
-      ...prev,
-      amount: data.amount || prev.amount,
-      date: data.date || prev.date,
-      description: data.description || prev.description,
-      category_id: matchedCatId || prev.category_id,
-    }));
-    setShowFisTara(false);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,36 +94,8 @@ const GelirGiderFormu = ({ userId, onSuccess }) => {
     <div className="form-container" style={{ maxWidth: '500px', margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h2 style={{ margin: 0 }}>Yeni İşlem Ekle</h2>
-        <button
-          type="button"
-          onClick={() => setShowFisTara(true)}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '9px 16px',
-            borderRadius: '10px',
-            border: '1px solid rgba(0,230,118,0.4)',
-            background: 'rgba(0,230,118,0.08)',
-            color: '#00e676',
-            cursor: 'pointer',
-            fontSize: '13px',
-            fontWeight: 600,
-            transition: 'all 0.2s ease',
-          }}
-          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(0,230,118,0.15)'}
-          onMouseOut={(e) => e.currentTarget.style.background = 'rgba(0,230,118,0.08)'}
-        >
-          📷 Fiş Tara
-        </button>
       </div>
 
-      {showFisTara && (
-        <FisTara
-          onResult={handleFisResult}
-          onClose={() => setShowFisTara(false)}
-        />
-      )}
 
       <form onSubmit={handleSubmit}>
 

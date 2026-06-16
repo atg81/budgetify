@@ -4,7 +4,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const MODEL = 'gemini-1.5-flash';
+const MODEL = 'gemini-1.5-flash-latest';
 
 // Dosyayı base64'e çevir
 const fileToBase64 = (file) =>

@@ -3,8 +3,8 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const MODEL = 'gemini-2.0-flash';
+const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.VITE_GEMINI_API_KEY;
+const MODEL = 'llama-3.2-11b-vision-preview';
 
 // Dosyayı base64'e çevir
 const fileToBase64 = (file) =>
@@ -52,18 +52,7 @@ const FisTara = ({ onResult, onClose }) => {
       const base64 = await fileToBase64(file);
       const today = new Date().toISOString().slice(0, 10);
 
-      const payload = {
-        contents: [
-          {
-            parts: [
-              {
-                inlineData: {
-                  mimeType: file.type,
-                  data: base64,
-                },
-              },
-              {
-                text: `Sen bir makbuz/fiş analisti yapay zekasısın. Bu fiş görselini analiz et ve SADECE aşağıdaki JSON formatında cevap ver. Başka hiçbir şey yazma, markdown kullanma.
+      const prompt = `Sen bir makbuz/fiş analisti yapay zekasısın. Bu fiş görselini analiz et ve SADECE aşağıdaki JSON formatında cevap ver. Başka hiçbir şey yazma, markdown kullanma.
 
 {
   "totalAmount": (fişin toplam tutarı, sadece rakam ve nokta, örn: 154.50),
@@ -72,21 +61,30 @@ const FisTara = ({ onResult, onClose }) => {
   "description": (satıcı/market/marka adı, kısa)
 }
 
-Fişte Türkçe karakterler olabilir. Toplam tutarı bul (TOPLAM, GENEL TOPLAM, TOTAL gibi satırlar).`,
-              },
-            ],
-          },
+Fişte Türkçe karakterler olabilir. Toplam tutarı bul (TOPLAM, GENEL TOPLAM, TOTAL gibi satırlar).`;
+
+      const payload = {
+        model: MODEL,
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: prompt },
+              { type: "image_url", image_url: { url: `data:${file.type};base64,${base64}` } }
+            ]
+          }
         ],
+        temperature: 0.1
       };
 
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
@@ -94,8 +92,7 @@ Fişte Türkçe karakterler olabilir. Toplam tutarı bul (TOPLAM, GENEL TOPLAM, 
       }
 
       const data = await res.json();
-      const text =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const text = data?.choices?.[0]?.message?.content || '';
 
       // JSON'ı metinden çıkar
       const match = text.match(/\{[\s\S]*\}/);

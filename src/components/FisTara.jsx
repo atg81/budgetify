@@ -4,7 +4,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.VITE_GEMINI_API_KEY;
-const MODEL = 'llama-3.2-11b-vision-preview';
+const MODEL = 'llama-3.2-90b-vision-preview';
 
 // Dosyayı base64'e çevir
 const fileToBase64 = (file) =>
